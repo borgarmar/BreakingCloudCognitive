@@ -3,7 +3,7 @@
   "type": "watson-conversation-v1",
   "z": "f94ff81e.e3c108",
   "name": "",
-  "workspaceid": "81c32db2-3945-43f1-8526-0bdb668f9288",
+  "workspaceid": "",
   "multiuser": false,
   "context": true,
   "empty-payload": true,
