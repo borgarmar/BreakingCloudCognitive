@@ -1,0 +1,213 @@
+[{
+  "id": "1f2a48f.2c95eb7",
+  "type": "watson-conversation-v1",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "workspaceid": "81c32db2-3945-43f1-8526-0bdb668f9288",
+  "multiuser": false,
+  "context": true,
+  "empty-payload": true,
+  "default-endpoint": true,
+  "service-endpoint": "https://gateway.watsonplatform.net/conversation/api",
+  "x": 370,
+  "y": 480,
+  "wires": [
+    ["8a6af477.2272b8"]
+  ]
+}, {
+  "id": "770e8dba.23a1b4",
+  "type": "visual-recognition-v3",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "apikey": "__PWRD__",
+  "image-feature": "classifyImage",
+  "lang": "es",
+  "x": 610,
+  "y": 80,
+  "wires": [
+    ["eec4ed5a.9b621"]
+  ]
+}, {
+  "id": "d3b8ee3d.bf6f3",
+  "type": "telegram receiver",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "bot": "",
+  "saveDataDir": "",
+  "x": 120,
+  "y": 80,
+  "wires": [
+    ["fee6756b.8286f8"],
+    []
+  ]
+}, {
+  "id": "fee6756b.8286f8",
+  "type": "switch",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "property": "payload.type",
+  "propertyType": "msg",
+  "rules": [{
+    "t": "eq",
+    "v": "photo",
+    "vt": "str"
+  }, {
+    "t": "eq",
+    "v": "message",
+    "vt": "str"
+  }],
+  "checkall": "true",
+  "repair": false,
+  "outputs": 2,
+  "x": 230,
+  "y": 300,
+  "wires": [
+    ["17517268.6d769e"],
+    ["55ad737f.5fa40c"]
+  ]
+}, {
+  "id": "55ad737f.5fa40c",
+  "type": "function",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "func": "msg.payload=msg.payload.content\nreturn msg;",
+  "outputs": 1,
+  "noerr": 0,
+  "x": 290,
+  "y": 420,
+  "wires": [
+    ["1f2a48f.2c95eb7"]
+  ]
+}, {
+  "id": "52915a88.80a644",
+  "type": "telegram sender",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "bot": "",
+  "x": 840,
+  "y": 180,
+  "wires": [
+    []
+  ]
+}, {
+  "id": "eec4ed5a.9b621",
+  "type": "function",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "func": "msg.payload={};\nvar clase =\"\";\nfor(var i =0; i<msg.result.images[0].classifiers[0].classes.length; i++){\n\n    clase +=\"\\n \"+msg.result.images[0].classifiers[0].classes[i].class+ \" con un score del \"+msg.result.images[0].classifiers[0].classes[i].score\n\n}\nmsg.payload.content = \"En la imagen veo: \"+clase;\nmsg.payload.type=\"message\"\nmsg.payload.chatId=msg.originalMessage.chat.id\nreturn msg;\n\n",
+  "outputs": 1,
+  "noerr": 0,
+  "x": 650,
+  "y": 180,
+  "wires": [
+    ["52915a88.80a644"]
+  ]
+}, {
+  "id": "b97f0644.64df18",
+  "type": "http request",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "method": "GET",
+  "ret": "txt",
+  "url": "",
+  "tls": "",
+  "x": 330,
+  "y": 180,
+  "wires": [
+    ["3c23360e.4334ba"]
+  ]
+}, {
+  "id": "17517268.6d769e",
+  "type": "function",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "func": "msg.url=\"https://api.telegram.org/bot523059603:AAG1DnDuKkztk8PTyhK88XGOFBqk5uxdt8E/getFile?file_id=\"+msg.originalMessage.photo[0].file_id\nreturn msg;",
+  "outputs": 1,
+  "noerr": 0,
+  "x": 270,
+  "y": 240,
+  "wires": [
+    ["b97f0644.64df18"]
+  ]
+}, {
+  "id": "87f3c209.3251f",
+  "type": "function",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "func": "msg.payload=\"https://api.telegram.org/file/bot523059603:AAG1DnDuKkztk8PTyhK88XGOFBqk5uxdt8E/\"+msg.payload.result.file_path\nreturn msg;\n\n",
+  "outputs": 1,
+  "noerr": 0,
+  "x": 450,
+  "y": 80,
+  "wires": [
+    ["770e8dba.23a1b4"]
+  ]
+}, {
+  "id": "3c23360e.4334ba",
+  "type": "json",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "property": "payload",
+  "action": "",
+  "pretty": false,
+  "x": 370,
+  "y": 120,
+  "wires": [
+    ["87f3c209.3251f"]
+  ]
+}, {
+  "id": "8d8af03d.2b263",
+  "type": "telegram sender",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "bot": "",
+  "x": 900,
+  "y": 500,
+  "wires": [
+    []
+  ]
+}, {
+  "id": "8a6af477.2272b8",
+  "type": "function",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "func": "msg.payload.content=\"\";\nfor(var i=0; i< msg.payload.output.text.length ; i++)\nmsg.payload.content+=\" \\n \"+msg.payload.output.text[i];\nmsg.payload.type=\"message\"\nmsg.payload.chatId=msg.originalMessage.chat.id\nreturn msg;",
+  "outputs": 1,
+  "noerr": 0,
+  "x": 620,
+  "y": 500,
+  "wires": [
+    ["8d8af03d.2b263", "675b712a.05695"]
+  ]
+}, {
+  "id": "1b31b06d.9043c",
+  "type": "comment",
+  "z": "f94ff81e.e3c108",
+  "name": "Si envía una imagen",
+  "info": "",
+  "x": 310,
+  "y": 40,
+  "wires": []
+}, {
+  "id": "675b712a.05695",
+  "type": "debug",
+  "z": "f94ff81e.e3c108",
+  "name": "",
+  "active": true,
+  "tosidebar": true,
+  "console": false,
+  "tostatus": false,
+  "complete": "true",
+  "x": 960,
+  "y": 600,
+  "wires": []
+}, {
+  "id": "5a143dbd.615b24",
+  "type": "comment",
+  "z": "f94ff81e.e3c108",
+  "name": "Si envía un texto",
+  "info": "",
+  "x": 120,
+  "y": 380,
+  "wires": []
+}]
