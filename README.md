@@ -1,5 +1,4 @@
 
-![Watson logo](banner.png) 
 # Contenido de los laboratorios
 
 ## Laboratorio 1
