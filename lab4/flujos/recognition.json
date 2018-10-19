@@ -1,20 +1,7 @@
 [{
-  "id": "e47a6c4f.6dfc9",
-  "type": "function",
-  "z": "637a5fc.f4eeba",
-  "name": "URL imagen",
-  "func": "msg.payload=msg.payload.weblink\nreturn msg;\n\n",
-  "outputs": 1,
-  "noerr": 0,
-  "x": 409.00000762939453,
-  "y": 170.00000381469727,
-  "wires": [
-    ["2616644d.d362dc"]
-  ]
-}, {
-  "id": "c48d0a49.c7a9c8",
+  "id": "27af53c9.fa216c",
   "type": "watson-conversation-v1",
-  "z": "637a5fc.f4eeba",
+  "z": "345f63f.359899c",
   "name": "",
   "workspaceid": "ca1a7c6a-8b77-4238-9e81-c33b074f4237",
   "multiuser": false,
@@ -24,28 +11,15 @@
   "service-endpoint": "https://gateway-fra.watsonplatform.net/conversation/api",
   "timeout": "",
   "optout-learning": false,
-  "x": 371,
-  "y": 573,
+  "x": 377.5,
+  "y": 485,
   "wires": [
-    ["d145f68e.aea798"]
+    ["381671c3.c844ee"]
   ]
 }, {
-  "id": "40ffe6e1.6a02f8",
-  "type": "telegram receiver",
-  "z": "637a5fc.f4eeba",
-  "name": "",
-  "bot": "7b49a95f.aec718",
-  "saveDataDir": "",
-  "x": 121,
-  "y": 173,
-  "wires": [
-    ["688d4e35.b91f6"],
-    []
-  ]
-}, {
-  "id": "688d4e35.b91f6",
+  "id": "de31728c.894ee",
   "type": "switch",
-  "z": "637a5fc.f4eeba",
+  "z": "345f63f.359899c",
   "name": "",
   "property": "payload.type",
   "propertyType": "msg",
@@ -61,121 +35,161 @@
   "checkall": "true",
   "repair": false,
   "outputs": 2,
-  "x": 231,
-  "y": 393,
+  "x": 237.5,
+  "y": 305,
   "wires": [
-    ["e47a6c4f.6dfc9"],
-    ["a2cf8975.1bb168"]
+    ["eaa4dfe8.51b83"],
+    ["d73daf51.fd782"]
   ]
 }, {
-  "id": "a2cf8975.1bb168",
+  "id": "d73daf51.fd782",
   "type": "function",
-  "z": "637a5fc.f4eeba",
+  "z": "345f63f.359899c",
   "name": "",
   "func": "msg.payload=msg.payload.content\nreturn msg;",
   "outputs": 1,
   "noerr": 0,
-  "x": 291,
-  "y": 513,
+  "x": 297.5,
+  "y": 425,
   "wires": [
-    ["c48d0a49.c7a9c8"]
+    ["27af53c9.fa216c"]
   ]
 }, {
-  "id": "e6547da0.38f16",
-  "type": "telegram sender",
-  "z": "637a5fc.f4eeba",
-  "name": "",
-  "bot": "7b49a95f.aec718",
-  "x": 841,
-  "y": 273,
-  "wires": [
-    []
-  ]
-}, {
-  "id": "a463e2c4.b2c38",
+  "id": "ce54aba5.2f0988",
   "type": "function",
-  "z": "637a5fc.f4eeba",
+  "z": "345f63f.359899c",
   "name": "",
   "func": "msg.payload={};\nvar clase =\"\";\nfor(var i =0; i<msg.result.images[0].classifiers[0].classes.length; i++){\n\n    clase +=\"\\n \"+msg.result.images[0].classifiers[0].classes[i].class+ \" con un score del \"+msg.result.images[0].classifiers[0].classes[i].score\n\n}\nmsg.payload.content = \"En la imagen veo: \"+clase;\nmsg.payload.type=\"message\"\nmsg.payload.chatId=msg.originalMessage.chat.id\nreturn msg;\n\n",
   "outputs": 1,
   "noerr": 0,
-  "x": 651,
-  "y": 273,
+  "x": 657.5,
+  "y": 185,
   "wires": [
-    ["e6547da0.38f16"]
+    ["c0e3b6d4.df80a8"]
   ]
 }, {
-  "id": "f17adcb0.4861d",
-  "type": "telegram sender",
-  "z": "637a5fc.f4eeba",
-  "name": "",
-  "bot": "7b49a95f.aec718",
-  "x": 901,
-  "y": 593,
-  "wires": [
-    []
-  ]
-}, {
-  "id": "d145f68e.aea798",
+  "id": "eaa4dfe8.51b83",
   "type": "function",
-  "z": "637a5fc.f4eeba",
+  "z": "345f63f.359899c",
+  "name": "URL imagen",
+  "func": "msg.payload=msg.payload.weblink\nreturn msg;\n\n",
+  "outputs": 1,
+  "noerr": 0,
+  "x": 415.50000762939453,
+  "y": 82.00000381469727,
+  "wires": [
+    ["faf68d30.bfc6a", "16518730.a45849"]
+  ]
+}, {
+  "id": "381671c3.c844ee",
+  "type": "function",
+  "z": "345f63f.359899c",
   "name": "",
   "func": "msg.payload.content=\"\";\nfor(var i=0; i< msg.payload.output.text.length ; i++)\nmsg.payload.content+=\" \\n \"+msg.payload.output.text[i];\nmsg.payload.type=\"message\"\nmsg.payload.chatId=msg.originalMessage.chat.id\nreturn msg;",
   "outputs": 1,
   "noerr": 0,
-  "x": 621,
-  "y": 593,
+  "x": 627.5,
+  "y": 505,
   "wires": [
-    ["f17adcb0.4861d", "fc48e6e8.a05298"]
+    ["131ccae4.a94065", "5d4beb74.44fa24"]
   ]
 }, {
-  "id": "583e50e6.2ab27",
+  "id": "6e2ebac4.ac9234",
   "type": "comment",
-  "z": "637a5fc.f4eeba",
+  "z": "345f63f.359899c",
   "name": "Si envía una imagen",
   "info": "",
-  "x": 311,
-  "y": 133,
+  "x": 317.5,
+  "y": 45,
   "wires": []
 }, {
-  "id": "fc48e6e8.a05298",
+  "id": "5d4beb74.44fa24",
   "type": "debug",
-  "z": "637a5fc.f4eeba",
+  "z": "345f63f.359899c",
   "name": "",
   "active": true,
   "tosidebar": true,
   "console": false,
   "tostatus": false,
   "complete": "true",
-  "x": 880.0000381469727,
-  "y": 684.0000267028809,
+  "x": 886.5000381469727,
+  "y": 596.0000267028809,
   "wires": []
 }, {
-  "id": "6080dc7e.82c894",
+  "id": "c06bd65f.a97c38",
   "type": "comment",
-  "z": "637a5fc.f4eeba",
+  "z": "345f63f.359899c",
   "name": "Si envía un texto",
   "info": "",
-  "x": 121,
-  "y": 473,
+  "x": 127.5,
+  "y": 385,
   "wires": []
 }, {
-  "id": "2616644d.d362dc",
-  "type": "visual-recognition-v3",
-  "z": "637a5fc.f4eeba",
+  "id": "390a77d5.20e9a8",
+  "type": "telegram receiver",
+  "z": "345f63f.359899c",
   "name": "",
-  "apikey": "88e98f1406856a96202de68dea003a767ddcbd26",
+  "bot": "7b49a95f.aec718",
+  "saveDataDir": "",
+  "x": 127.5,
+  "y": 85,
+  "wires": [
+    ["de31728c.894ee"],
+    []
+  ]
+}, {
+  "id": "c0e3b6d4.df80a8",
+  "type": "telegram sender",
+  "z": "345f63f.359899c",
+  "name": "",
+  "bot": "7b49a95f.aec718",
+  "x": 847.5,
+  "y": 185,
+  "wires": [
+    []
+  ]
+}, {
+  "id": "131ccae4.a94065",
+  "type": "telegram sender",
+  "z": "345f63f.359899c",
+  "name": "",
+  "bot": "7b49a95f.aec718",
+  "x": 907.5,
+  "y": 505,
+  "wires": [
+    []
+  ]
+}, {
+  "id": "faf68d30.bfc6a",
+  "type": "debug",
+  "z": "345f63f.359899c",
+  "name": "",
+  "active": true,
+  "tosidebar": true,
+  "console": false,
+  "tostatus": false,
+  "complete": "false",
+  "x": 648,
+  "y": 68,
+  "wires": []
+}, {
+  "id": "16518730.a45849",
+  "type": "visual-recognition-v3",
+  "z": "345f63f.359899c",
+  "name": "",
+  "apikey": "2CPqc6D4OK6_ixx8mV52MV-Agf4yc1WW67AkbkijqRhE",
+  "vr-service-endpoint": "https://gateway.watsonplatform.net/visual-recognition/api",
   "image-feature": "classifyImage",
   "lang": "es",
-  "x": 486.5,
-  "y": 275,
+  "x": 437,
+  "y": 199,
   "wires": [
-    ["a463e2c4.b2c38"]
+    ["ce54aba5.2f0988"]
   ]
 }, {
   "id": "7b49a95f.aec718",
   "type": "telegram bot",
-  "z": "",
+  "z": 0,
   "botname": "cognitivebot",
   "usernames": "",
   "chatids": "",
